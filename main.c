@@ -153,7 +153,7 @@ bool checkEqualPairs(struct point p1, struct point p2) {
 }
 
 // sort by x coordinate first, then by y
-void sortByIncreasingPairs(struct quadrilateral* q) {
+void sortByIncreasingPairs (struct quadrilateral* q) {
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 3 - i; j++)
             if (comparePairs(q->v[j], q->v[j + 1])) {
@@ -164,7 +164,7 @@ void sortByIncreasingPairs(struct quadrilateral* q) {
 
 }
 
-bool compareQuadrilaterals(struct quadrilateral q1, struct quadrilateral q2) {
+bool compareQuadrilaterals (struct quadrilateral q1, struct quadrilateral q2) {
     sortByIncreasingPairs(&q1);
     sortByIncreasingPairs(&q2);
 
@@ -195,12 +195,13 @@ void start() {
     bool flag = true;
     struct ListNode* head = NULL;
 
+
     while (flag) {
         printf("Choose one of the following options: \n");
         printf("1. Insert node. \n");
         printf("2. Delete nose at specified index. \n");
         printf("3. Delete node(s) with specified content. \n");
-        printf("4. Iterate through list. \n");
+        printf("4. Print list. \n");
         printf("5. Display node at specified position. \n");
         printf("6. Exit. \n");
 
@@ -211,8 +212,11 @@ void start() {
             case 1:
             {
                 struct quadrilateral q = scan_q();
-                struct ListNode node = {q, quad_area(q), NULL};
-                insertListNode(&head, &node);
+                struct ListNode* node = malloc(sizeof(struct ListNode));
+                        node->vertices = q;
+                        node->area = quad_area(q);
+                        node->next = NULL;
+                insertListNode(&head, node);
             } break;
 
             case 2:
@@ -248,34 +252,38 @@ void start() {
         }
     }
 
+    destroyList(&head);
+
 }
 
 
 int main () {
 
-    struct quadrilateral q1 = { {{0,0}, {1, 2}, {4,0}, {0, 4} } };
-    struct quadrilateral q2 = {{{0,0}, {1, 0}, {1, 1}, {0, 1} } };
-    struct quadrilateral q3 = {{{0,0}, {2, 0}, {2, 2}, {0, 2} } };
-    struct quadrilateral q4 = { { {0, 0}, {0, 0},{0, 0},{0, 0} } };
+    start();
 
-    struct quadrilateral q11 =  { {{1, 2}, {4,0}, {0, 4}, {0,0} } };
-
-    struct ListNode n1 = {q1, quad_area(q1), NULL};
-    struct ListNode n2 = {q2, quad_area(q2), NULL};
-    struct ListNode n3 = {q3, quad_area(q3), NULL};
-    struct ListNode n4 = {q4, quad_area(q4), NULL};
-
-    struct ListNode* head = NULL;
-    insertListNode(&head, &n1);
-    insertListNode(&head, &n2);
-    insertListNode(&head, &n3);
-    insertListNode(&head, &n4);
-    deleteNodeByContent(&head, q11);
-    deleteNodeByPosition(&head, 1);
-
-    printList(head);
-
-    printNodeByPosition(head, 2);
+//    struct quadrilateral q1 = { {{0,0}, {1, 2}, {4,0}, {0, 4} } };
+//    struct quadrilateral q2 = {{{0,0}, {1, 0}, {1, 1}, {0, 1} } };
+//    struct quadrilateral q3 = {{{0,0}, {2, 0}, {2, 2}, {0, 2} } };
+//    struct quadrilateral q4 = { { {0, 0}, {0, 0},{0, 0},{0, 0} } };
+//
+//    struct quadrilateral q11 =  { {{1, 2}, {4,0}, {0, 4}, {0,0} } };
+//
+//    struct ListNode n1 = {q1, quad_area(q1), NULL};
+//    struct ListNode n2 = {q2, quad_area(q2), NULL};
+//    struct ListNode n3 = {q3, quad_area(q3), NULL};
+//    struct ListNode n4 = {q4, quad_area(q4), NULL};
+//
+//    struct ListNode* head = NULL;
+//    insertListNode(&head, &n1);
+//    insertListNode(&head, &n2);
+//    insertListNode(&head, &n3);
+//    insertListNode(&head, &n4);
+//    deleteNodeByContent(&head, q11);
+//    deleteNodeByPosition(&head, 1);
+//
+//    printList(head);
+//
+//    printNodeByPosition(head, 2);
 
     return 0;
 }
